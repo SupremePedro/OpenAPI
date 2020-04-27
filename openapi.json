@@ -1,0 +1,333 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "description": "This is a monopoly server API documentation",
+    "version": "0.0.1",
+    "title": "Monopoly Online"
+  },
+  "paths": {
+    "/users/": {
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "the user being returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "the user identifier, as userId",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "the user being returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "responses": {
+          "201": {
+            "description": "the user being returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "the user being returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}/friends/": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "return list of users(friends)"
+          }
+        }
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "add user to friendlist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}/friends/{friendId}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "friendId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "must return user entity for friend with id = friendId",
+        "responses": {
+          "200": {
+            "description": "return user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "return deleted user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/inventory/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "the user identifier, as userId",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "description": "return list of item of Authorized user",
+        "responses": {
+          "200": {
+            "description": "returned list of item",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Items"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/Item"
+              }
+            }
+          }
+        },
+        "description": "return list of item of Authorized user",
+        "responses": {
+          "200": {
+            "description": "returned list of item",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Items"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "return list of item of Authorized user",
+        "responses": {
+          "200": {
+            "description": "returned list of item",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Items"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TradeOffer": {
+        "description": "trade offer beetween 2 users",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 4
+          },
+          "status": {
+            "type": "string",
+            "example": "Rejected"
+          },
+          "sender": {
+            "type": "object",
+            "$ref": "#/components/schemas/User"
+          },
+          "receiver": {
+            "type": "object",
+            "$ref": "#/components/schemas/User"
+          },
+          "senderTtems": {
+            "type": "object",
+            "$ref": "#/components/schemas/Items"
+          },
+          "receiverItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            }
+          }
+        }
+      },
+      "Users": {
+        "description": "array of users",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/User"
+        }
+      },
+      "Items": {
+        "description": "Array of item",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Item"
+        }
+      },
+      "Item": {
+        "description": "Item model",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 4
+          },
+          "name": {
+            "type": "string",
+            "example": "superbox11"
+          }
+        }
+      },
+      "User": {
+        "description": "User model",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 4
+          },
+          "email": {
+            "type": "string",
+            "example": "petrsupreme@gmail.com"
+          }
+        }
+      }
+    }
+  }
+}
